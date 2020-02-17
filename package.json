@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "repository": "git@github.com:marcosabb/controlae-backend.git",
   "author": "Marcos Borges <marcos.abb52@gmail.com>",
@@ -22,7 +22,8 @@
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.7",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "sucrase": "^3.12.1"
   },
   "husky": {
     "hooks": {
@@ -32,7 +33,7 @@
     }
   },
   "lint-staged": {
-    ".js": [
+    "*.js": [
       "eslint --fix",
       "git add"
     ]
