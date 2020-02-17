@@ -1,5 +1,0 @@
-{
-  "/devices": "/devices",
-  "/brands/:id": "/devices/:id/brands",
-  "/controls/:id": "/devices/:id/controls"
-}
