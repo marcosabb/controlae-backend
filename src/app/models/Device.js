@@ -6,13 +6,24 @@ const DeviceSchema = new mongoose.Schema({
     required: true
   },
 
+  order: {
+    type: String,
+    required: true
+  },
+
   type: {
     type: String,
     required: true
   },
 
-  gradient: {
-    type: [String],
+  brand: {
+    type: String,
+    required: true
+  },
+
+  control: {
+    type: Map,
+    of: String,
     required: true
   }
 })

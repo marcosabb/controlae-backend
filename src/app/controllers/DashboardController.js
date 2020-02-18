@@ -2,7 +2,7 @@ import * as Yup from 'yup'
 
 import Device from '../models/Device'
 
-class DeviceController {
+class DashboardController {
   async index (req, res) {
     const devices = await Device.find()
 
@@ -10,20 +10,23 @@ class DeviceController {
   }
 
   async store (req, res) {
-    const { type, gradient } = req.body
+    const { order, type, brand, control } = req.body
 
     const schema = Yup.object().shape({
       type: Yup.string().required(),
-      gradient: Yup.array().of(Yup.string()).min(2).max(2).required()
+      order: Yup.string().required(),
+      brand: Yup.string().required(),
+      control: Yup.object().shape().required()
     })
 
-    if (!(await schema.isValid({ type, gradient }))) {
+    if (!(await schema.isValid({ order, type, brand, control }))) {
       return res.status(400).json({ error: 'Validation failed' })
     }
 
     const deviceExists = await Device.exists({
       user: req.user,
-      type
+      type,
+      brand
     })
 
     if (deviceExists) {
@@ -32,8 +35,10 @@ class DeviceController {
 
     const device = await Device.create({
       user: req.user,
+      order,
       type,
-      gradient
+      brand,
+      control
     })
 
     return res.json(device)
@@ -41,14 +46,16 @@ class DeviceController {
 
   async update (req, res) {
     const { id } = req.params
-    const { type, gradient } = req.body
+    const { order, type, brand, control } = req.body
 
     const schema = Yup.object().shape({
-      type: Yup.string(),
-      gradient: Yup.array().of(Yup.string()).min(2).max(2)
+      type: Yup.string().required(),
+      order: Yup.string().required(),
+      brand: Yup.string().required(),
+      control: Yup.object().shape()
     })
 
-    if (!(await schema.isValid({ type, gradient }))) {
+    if (!(await schema.isValid({ order, type, brand, control }))) {
       return res.status(400).json({ error: 'Validation failed' })
     }
 
@@ -57,10 +64,11 @@ class DeviceController {
       _id: id
     })
 
-    if (type !== updateDevice.type) {
+    if (type !== updateDevice.type || brand !== updateDevice.brand) {
       const deviceExists = await Device.findOne({
         user: req.user,
-        type
+        type,
+        brand
       })
 
       if (deviceExists) {
@@ -69,11 +77,8 @@ class DeviceController {
     }
 
     const device = await Device.findOneAndUpdate(
-      {
-        user: req.user,
-        _id: id
-      },
-      { type, gradient },
+      { user: req.user, _id: id },
+      { order, type, brand, control },
       { new: true, upsert: true }
     )
 
@@ -83,17 +88,13 @@ class DeviceController {
   async delete (req, res) {
     const { id } = req.params
 
-    console.log(id, req.user)
-
     const device = await Device.findOneAndDelete({
       user: req.user,
       _id: id
     })
 
-    console.log(device)
-
     return res.json(device)
   }
 }
 
-export default new DeviceController()
+export default new DashboardController()
