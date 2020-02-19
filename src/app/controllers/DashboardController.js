@@ -4,9 +4,22 @@ import Device from '../models/Device'
 
 class DashboardController {
   async index (req, res) {
-    const devices = await Device.find()
+    const devices = await Device
+      .find({ user: req.user })
+      .sort({ order: 1 })
 
     return res.json(devices)
+  }
+
+  async show (req, res) {
+    const { id } = req.params
+
+    const device = await Device.find({
+      user: req.user,
+      _id: id
+    })
+
+    return res.json(device)
   }
 
   async store (req, res) {
@@ -88,10 +101,12 @@ class DashboardController {
   async delete (req, res) {
     const { id } = req.params
 
-    const device = await Device.findOneAndDelete({
-      user: req.user,
-      _id: id
-    })
+    const device = await Device.findOneAndDelete(
+      {
+        user: req.user,
+        _id: id
+      }
+    )
 
     return res.json(device)
   }

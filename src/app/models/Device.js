@@ -3,7 +3,8 @@ import mongoose from 'mongoose'
 const DeviceSchema = new mongoose.Schema({
   user: {
     type: String,
-    required: true
+    required: true,
+    select: false
   },
 
   order: {

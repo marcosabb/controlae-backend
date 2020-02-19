@@ -17,6 +17,7 @@ routes.get('/client/devices', ClientController.index)
 routes.use(authMiddleware)
 
 routes.get('/dashboard/devices', DashboardController.index)
+routes.get('/dashboard/devices/:id', DashboardController.show)
 routes.post('/dashboard/devices', DashboardController.store)
 routes.put('/dashboard/devices/:id', DashboardController.update)
 routes.delete('/dashboard/devices/:id', DashboardController.delete)
