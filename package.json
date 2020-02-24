@@ -5,7 +5,7 @@
   "scripts": {
     "start": "yarn build && node build/server.js",
     "dev": "nodemon src/server.js",
-    "build": "sucrase ./src -d ./build --transforms imports"
+    "build": "yarn sucrase ./src -d ./build --transforms imports"
   },
   "repository": "git@github.com:marcosabb/controlae-backend.git",
   "author": "Marcos Borges <marcos.abb52@gmail.com>",
