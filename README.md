@@ -14,7 +14,7 @@
 
 - Clone this repo (`git clone git@github.com:marcosabb/controlae-backend.git`)
 - Install dependencies (`yarn`)
-- Create a `.env` file and copy and paste the content of `.env.example` file
+- Create a `.env` file and copy/paste the content of `.env.example` file
 - Start server (`yarn dev`)
 
 ## Contribute
