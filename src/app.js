@@ -15,7 +15,9 @@ class App {
   }
 
   middlewares () {
-    this.server.use(cors())
+    this.server.use(cors({
+      origin: process.env.CORS_ORIGIN
+    }))
     this.server.use(express.json())
   }
 
